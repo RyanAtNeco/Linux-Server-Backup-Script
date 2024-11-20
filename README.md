@@ -34,7 +34,6 @@ INCLUDE_DIRS=(
     "/var/www"     # Web server files
     "/opt"         # Third-party applications
     "/var/lib/mysql" # MySQL data (ensure database is stopped or use a dump)
-    "/var/lib/postgresql" # PostgreSQL data
 )
 
 # Ensure the backup directory exists
@@ -42,7 +41,7 @@ mkdir -p "$BACKUP_DIR"
 
 # Perform the backup
 echo "Starting backup..."
-tar -czf "$BACKUP_FILE" "${INCLUDE_DIRS[@]}" --exclude='/lost+found'
+tar --exclude='/lost+found' -czf "$BACKUP_FILE" "${INCLUDE_DIRS[@]}"
 
 # Verify the backup
 if [ $? -eq 0 ]; then
